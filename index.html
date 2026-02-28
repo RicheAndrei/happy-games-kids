@@ -5,15 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riche & Andrei Games</title>
     <style>
-        body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2f5; font-family: sans-serif; }
-        .container { background: white; padding: 40px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; width: 320px; }
-        h1 { color: #333; margin-bottom: 30px; font-size: 24px; }
-        .button { display: block; width: 100%; padding: 15px 0; margin: 15px 0; border-radius: 12px; color: white; font-size: 18px; font-weight: bold; text-decoration: none; transition: 0.2s; border: none; cursor: pointer; }
-        .button:active { transform: scale(0.95); }
-        .red { background-color: #ff4757; }
-        .blue { background-color: #3498db; }
-        .green { background-color: #2ed573; }
-        .footer { margin-top: 20px; font-size: 14px; color: #888; }
+        body { 
+            margin: 0; 
+            padding: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        }
+        .container { 
+            background: rgba(255, 255, 255, 0.95); 
+            padding: 50px 40px; 
+            border-radius: 30px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2); 
+            text-align: center; 
+            width: 350px; 
+        }
+        h1 { 
+            color: #2d3436; 
+            margin-bottom: 35px; 
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .button { 
+            display: block; 
+            width: 100%; 
+            padding: 18px 0; 
+            margin: 20px 0; 
+            border-radius: 15px; 
+            color: white; 
+            font-size: 20px; 
+            font-weight: bold; 
+            text-decoration: none; 
+            transition: all 0.3s ease; 
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        .button:active { transform: scale(0.98); }
+        .red { background: linear-gradient(to right, #ff416c, #ff4b2b); }
+        .footer { 
+            margin-top: 25px; 
+            font-size: 14px; 
+            color: #636e72; 
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -21,13 +64,9 @@
 <div class="container">
     <h1>🎮 Riche & Andrei 🎮</h1>
     
-    <a href="game4/index.html" class="button red">🔍 Guess the Icon</a>
+    <a href="game4/index.html" class="button red">✍️ Spell the Object</a>
     
-    <a href="game3/index.html" class="button blue">💡 Logic Trap</a>
-    
-    <a href="game2/index.html" class="button green">🎯 Hidden Object</a>
-    
-    <div class="footer">Enjoy playing!</div>
+    <div class="footer">Choose a game to play!</div>
 </div>
 
 </body>
