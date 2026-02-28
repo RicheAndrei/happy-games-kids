@@ -9,91 +9,66 @@
         :root { --gold: #f9d71c; --red: #b32a2a; }
         body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: 'Arial Black', sans-serif; overflow: hidden; }
         #game-container { width: 360px; height: 640px; position: relative; background: #111; border-radius: 20px; overflow: hidden; border: 3px solid #333; }
-        
         .ui { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; pointer-events: none; display: flex; flex-direction: column; align-items: center; }
         .header { width: 85%; background: rgba(0,0,0,0.85); border: 2.5px solid var(--gold); border-radius: 15px; margin-top: 25px; padding: 10px; display: flex; align-items: center; }
-        
-        /* Fixed Profile Pic Path */
         .profile-pic { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--gold); background-image: url('../mypic.jpg.jpg'); background-size: cover; background-position: center; }
-        
         .profile-info { margin-left: 12px; color: white; line-height: 1.2; text-align: left; }
         .profile-info h3 { margin: 0; font-size: 14px; color: var(--gold); text-transform: uppercase; }
         .instruction { width: 80%; background: var(--red); color: white; padding: 12px; border-radius: 8px; margin-top: 20px; text-align: center; border: 2px solid white; font-size: 16px; text-transform: uppercase; }
-
         #object-layer { position: absolute; width: 100%; height: 100%; z-index: 5; pointer-events: auto; }
         .icon { position: absolute; font-size: 35px; user-select: none; cursor: pointer; }
-
-        .footer { position: absolute; bottom: 20px; width: 100%; text-align: center; pointer-events: none; }
-        .blink { color: white; font-size: 14px; font-weight: bold; animation: soft-blink 2s infinite; margin-bottom: 5px; }
-        .cta { color: var(--gold); font-size: 10px; font-weight: bold; text-shadow: 1px 1px #000; }
+        .footer { position: absolute; bottom: 20px; width: 100%; text-align: center; }
+        .blink { color: white; font-size: 14px; font-weight: bold; animation: soft-blink 2s infinite; }
         @keyframes soft-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
     </style>
 </head>
 <body>
-
 <div id="game-container">
     <div id="object-layer"></div>
     <div class="ui">
         <div class="header">
             <div class="profile-pic"></div>
-            <div class="profile-info">
-                <h3>RICHE ANDREI</h3>
-                <p style="margin:0; font-size:8px;">DIGITAL CREATOR | GAME DEVELOPER</p>
-            </div>
+            <div class="profile-info"><h3>RICHE ANDREI</h3><p style="margin:0; font-size:8px;">GAME DEVELOPER</p></div>
         </div>
         <div class="instruction" id="msg">FIND THE OBJECT!</div>
-        <div class="footer">
-            <div class="blink">WANT TO PLAY? LINK IN THE COMMENTS! 🎮</div>
-            <div class="cta">HAPPY GAMING! FOLLOW & SHARE – RICHE ANDREI ❤️</div>
-        </div>
+        <div class="footer"><div class="blink">WANT TO PLAY? LINK IN COMMENTS! 🎮</div></div>
     </div>
 </div>
-
 <script>
     const msg = document.getElementById('msg');
     const objectLayer = document.getElementById('object-layer');
-    
-    // Listahan sa icons ug names
     const items = [
         { n: 'APPLE', i: '🍎' }, { n: 'PIZZA', i: '🍕' }, { n: 'BURGER', i: '🍔' },
         { n: 'BALL', i: '⚽' }, { n: 'CAR', i: '🚗' }, { n: 'CAKE', i: '🎂' },
-        { n: 'PINEAPPLE', i: '🍍' }, { n: 'STAR', i: '⭐' }, { n: 'DOG', i: '🐶' }, { n: 'CHERRY', i: '🍒' }
+        { n: 'STAR', i: '⭐' }, { n: 'DOG', i: '🐶' }
     ];
-
-    let isTransitioning = false;
 
     function spawn() {
         objectLayer.innerHTML = '';
-        isTransitioning = false;
-        
         const target = items[Math.floor(Math.random() * items.length)];
-        msg.innerText = `FIND THE ${target.n}!`;
+        msg.innerText = "FIND THE " + target.n + "!";
 
-        // Deco Icons (45 icons para challenging)
-        for (let i = 0; i < 45; i++) {
+        // Spawn 40 random background icons
+        for (let i = 0; i < 40; i++) {
             const el = document.createElement('div');
             el.className = 'icon';
             el.innerText = items[Math.floor(Math.random() * items.length)].i;
-            el.style.left = Math.random() * 280 + 20 + 'px';
-            el.style.top = Math.random() * 350 + 150 + 'px';
+            el.style.left = Math.floor(Math.random() * 280 + 20) + 'px';
+            el.style.top = Math.floor(Math.random() * 350 + 150) + 'px';
             objectLayer.appendChild(el);
         }
 
-        // The Real Target
+        // Spawn the REAL target
         const tObj = document.createElement('div');
         tObj.className = 'icon';
         tObj.innerText = target.i;
-        tObj.style.left = Math.random() * 280 + 20 + 'px';
-        tObj.style.top = Math.random() * 350 + 150 + 'px';
-        tObj.style.zIndex = "6";
-        
+        tObj.style.left = Math.floor(Math.random() * 280 + 20) + 'px';
+        tObj.style.top = Math.floor(Math.random() * 350 + 150) + 'px';
+        tObj.style.zIndex = "10";
         tObj.onclick = () => {
-            if (!isTransitioning) {
-                isTransitioning = true;
-                confetti({ particleCount: 150, spread: 70, origin: { y: 0.7 } });
-                msg.innerText = "EXCELLENT! 🎉";
-                setTimeout(spawn, 2000);
-            }
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.7 } });
+            msg.innerText = "EXCELLENT! 🎉";
+            setTimeout(spawn, 2000);
         };
         objectLayer.appendChild(tObj);
     }
