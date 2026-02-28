@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>RICHE ANDREI - MATH CATCHER PRO</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: 'Arial Black', sans-serif; overflow: hidden; color: white; touch-action: none; }
+        
+        #game { 
+            width: 360px; 
+            height: 640px; 
+            background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e); 
+            border: 4px solid #f9d71c; 
+            position: relative; 
+            overflow: hidden; 
+            border-radius: 20px; 
+        }
+
+        /* PROMO TEXT SA TUNGA (BACKGROUND) */
+        #promo-bg {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            text-align: center;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.15; 
+        }
+        #promo-bg h2 { margin: 0; font-size: 30px; color: #f9d71c; letter-spacing: 2px; }
+        #promo-bg p { margin: 5px 0; font-size: 14px; letter-spacing: 1px; color: #fff; }
+        
+        #info-bar { 
+            position: absolute; 
+            top: 20px; 
+            width: 100%; 
+            padding: 10px 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            background: rgba(249, 215, 28, 0.2); 
+            box-sizing: border-box; 
+            z-index: 50; 
+            border-bottom: 2px solid #f9d71c;
+        }
+        
+        #equation { 
+            text-align: center; 
+            font-size: 30px; 
+            margin-top: 100px; 
+            font-weight: bold; 
+            color: #f9d71c; 
+            text-shadow: 3px 3px #000; 
+            position: relative;
+            z-index: 10;
+        }
+
+        /* BRAND TEXT SA UBOS */
+        #brand-text {
+            position: absolute;
+            bottom: 30px; 
+            width: 100%;
+            text-align: center;
+            z-index: 50;
+            pointer-events: none;
+        }
+        #brand-text .name { font-size: 20px; color: #f9d71c; text-shadow: 2px 2px #000; display: block; }
+        #brand-text .action { font-size: 11px; color: #fff; opacity: 0.8; letter-spacing: 1px; font-family: sans-serif; font-weight: bold; }
+        
+        #catcher { 
+            position: absolute; 
+            bottom: 110px; 
+            width: 110px; 
+            height: 55px; 
+            background: #f9d71c; 
+            border-radius: 0 0 35px 35px; 
+            left: 125px; 
+            border: 3px solid #fff; 
+            box-shadow: 0 5px 20px rgba(249,215,28,0.5); 
+            cursor: grab; 
+            z-index: 20; 
+        }
+        
+        .falling { 
+            position: absolute; 
+            min-width: 60px; 
+            height: 60px; 
+            background: #fff; 
+            color: #000; 
+            border-radius: 50%; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            font-weight: bold; 
+            font-size: 22px; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5); 
+            border: 2px solid #333; 
+            z-index: 15;
+        }
+
+        #pop-text {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            top: 240px;
+            font-size: 50px;
+            color: #f9d71c;
+            display: none;
+            z-index: 100;
+            text-shadow: 4px 4px #000;
+        }
+        
+        #lvl-msg { 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            font-size: 35px; 
+            color: #f9d71c; 
+            font-weight: bold; 
+            display: none; 
+            z-index: 200; 
+            text-align: center; 
+            background: rgba(0,0,0,0.95); 
+            width: 100%; 
+            padding: 30px; 
+            border-top: 5px solid #f9d71c; 
+            border-bottom: 5px solid #f9d71c; 
+        }
+    </style>
+</head>
+<body>
+
+<div id="game">
+    <div id="promo-bg">
+        <h2>RICHE ANDREI</h2>
+        <p>FOLLOW & SHARE</p>
+    </div>
+
+    <div id="info-bar">
+        <div id="score">SCORE: 0</div>
+        <div id="level">LVL: 1</div>
+    </div>
+    
+    <div id="lvl-msg">LEVEL UP!</div>
+    <div id="pop-text">WOW!</div>
+    <div id="equation">READY...</div>
+    
+    <div id="catcher"></div>
+
+    <div id="brand-text">
+        <span class="name">RICHE ANDREI</span>
+        <span class="action">FOLLOW & SHARE FOR MORE MATH GAMES</span>
+    </div>
+</div>
+
+<script>
+    let score = 0;
+    let level = 1;
+    let target = 0;
+    let gameActive = true;
+    
+    const correctSfx = new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3');
+    const wrongSfx = new Audio('https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3');
+    const congratsSfx = new Audio('https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3');
+
+    const game = document.getElementById('game');
+    const catcher = document.getElementById('catcher');
+    const eqText = document.getElementById('equation');
+    const popText = document.getElementById('pop-text');
+    const msg = document.getElementById('lvl-msg');
+    const praiseWords = ["WOW!", "GALING!", "NICE!", "SHARP!", "SUPER!"];
+
+    function speakEquation(text) {
+        window.speechSynthesis.cancel();
+        let ut = new SpeechSynthesisUtterance(text);
+        ut.lang = 'en-US';
+        ut.rate = 0.9;
+        window.speechSynthesis.speak(ut);
+    }
+
+    let isDragging = false;
+    function moveCatcher(clientX) {
+        let rect = game.getBoundingClientRect();
+        let x = clientX - rect.left - (catcher.offsetWidth / 2);
+        if (x < 0) x = 0;
+        if (x > rect.width - catcher.offsetWidth) x = rect.width - catcher.offsetWidth;
+        catcher.style.left = x + "px";
+    }
+    catcher.addEventListener('mousedown', () => isDragging = true);
+    window.addEventListener('mousemove', (e) => { if (isDragging) moveCatcher(e.clientX); });
+    window.addEventListener('mouseup', () => isDragging = false);
+    catcher.addEventListener('touchstart', (e) => { isDragging = true; moveCatcher(e.touches[0].clientX); });
+    window.addEventListener('touchmove', (e) => { if (isDragging) moveCatcher(e.touches[0].clientX); });
+    window.addEventListener('touchend', () => isDragging = false);
+
+    function showPopText(txt) {
+        popText.innerText = txt;
+        popText.style.display = "block";
+        setTimeout(() => { popText.style.display = "none"; }, 800);
+    }
+
+    function newProblem() {
+        let n1, n2, n3, speechText;
+        if (level === 1) { 
+            n1 = Math.floor(Math.random() * 9); n2 = Math.floor(Math.random() * 9); 
+            target = n1 + n2; eqText.innerText = n1 + " + " + n2 + " = ?";
+            speechText = n1 + " plus " + n2;
+        } else if (level === 2) { 
+            n1 = Math.floor(Math.random() * 40) + 10; n2 = Math.floor(Math.random() * 40) + 10; 
+            target = n1 + n2; eqText.innerText = n1 + " + " + n2 + " = ?";
+            speechText = n1 + " plus " + n2;
+        } else if (level === 3) {
+            n1 = Math.floor(Math.random() * 20) + 10; n2 = Math.floor(Math.random() * 20) + 10; n3 = Math.floor(Math.random() * 15) + 5;
+            target = n1 + n2 + n3; eqText.innerText = n1 + " + " + n2 + " + " + n3 + " = ?";
+            speechText = n1 + " plus " + n2 + " plus " + n3;
+        } else { 
+            n1 = Math.floor(Math.random() * 80) + 20; n2 = Math.floor(Math.random() * 60) + 20; n3 = Math.floor(Math.random() * 40) + 10;
+            target = n1 + n2 + n3; eqText.innerText = n1 + " + " + n2 + " + " + n3 + " = ?";
+            speechText = n1 + " plus " + n2 + " plus " + n3;
+        }
+        setTimeout(() => speakEquation(speechText), 400);
+    }
+
+    function checkLevelUp() {
+        let oldLevel = level;
+        if (score >= 21) level = 4; else if (score >= 14) level = 3; else if (score >= 7) level = 2;
+        if (level > oldLevel) {
+            congratsSfx.play();
+            document.getElementById('level').innerText = "LVL: " + level;
+            msg.innerText = "LEVEL " + level + "!";
+            if(level === 4) msg.innerText = "FINAL ROUND:\nRICHE ANDREI MODE! 🔥";
+            msg.style.display = "block";
+            confetti({ particleCount: 200, spread: 90 });
+            setTimeout(() => { msg.style.display = "none"; }, 3000);
+        }
+    }
+
+    function createFalling() {
+        if(!gameActive) return;
+        let div = document.createElement('div');
+        div.className = 'falling';
+        let val = Math.random() > 0.4 ? target : target + (Math.floor(Math.random() * 10) - 5);
+        div.innerText = val;
+        div.style.left = Math.floor(Math.random() * (360 - 70)) + "px";
+        div.style.top = "0px";
+        game.appendChild(div);
+
+        let fallTimer = setInterval(() => {
+            let top = parseInt(div.style.top);
+            div.style.top = (top + 3) + "px"; 
+
+            if(top > 470 && top < 530) {
+                let divLeft = parseInt(div.style.left);
+                let cLeft = parseInt(catcher.style.left || 125);
+                if(divLeft > cLeft - 30 && divLeft < cLeft + 90) {
+                    if(div.innerText == target) {
+                        score += 1;
+                        correctSfx.play();
+                        showPopText(praiseWords[Math.floor(Math.random()*praiseWords.length)]);
+                        confetti({ particleCount: 30, origin: { y: 0.82 } });
+                        checkLevelUp();
+                        newProblem();
+                    } else {
+                        score = Math.max(0, score - 1);
+                        wrongSfx.play();
+                    }
+                    document.getElementById('score').innerText = "SCORE: " + score;
+                    clearInterval(fallTimer); div.remove();
+                }
+            }
+            if(top > 650) { clearInterval(fallTimer); div.remove(); }
+        }, 30);
+    }
+
+    newProblem();
+    setInterval(createFalling, 2500);
+</script>
+</body>
+</html>
