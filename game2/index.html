@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RICHE MATH WHEEL</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: 'Arial Black', sans-serif; color: white; overflow: hidden; }
+        #game { width: 340px; height: 600px; background: #000; border: 4px solid #f9d71c; border-radius: 20px; display: flex; flex-direction: column; align-items: center; position: relative; }
+        
+        #t-bar { width: 85%; height: 12px; background: #222; border-radius: 10px; margin-top: 15px; overflow: hidden; border: 1px solid #fff; }
+        #t-fill { width: 0%; height: 100%; background: #2ecc71; }
+
+        .w-area { display: flex; gap: 10px; margin-top: 15px; }
+        .w-cont { position: relative; width: 100px; height: 100px; }
+        .wheel { width: 100%; height: 100%; border-radius: 50%; border: 3px solid #f9d71c; background: #fff; position: relative; transition: transform 3s cubic-bezier(0.1, 0.7, 0.1, 1); overflow: hidden; }
+        .num { position: absolute; width: 100%; height: 100%; text-align: center; color: #000; font-weight: 900; transform-origin: 50% 50%; padding-top: 5px; font-size: 16px; }
+        .ptr { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 18px solid #ff4d4d; z-index: 10; }
+
+        .eq-area { display: flex; gap: 6px; margin-top: 15px; }
+        .box { width: 50px; height: 50px; background: #1a1a1a; border: 2px solid #fff; display: flex; justify-content: center; align-items: center; font-size: 24px; border-radius: 10px; color: #f9d71c; }
+        #ans { margin-top: 10px; font-size: 45px; border-bottom: 4px solid #f9d71c; width: 130px; text-align: center; height: 55px; line-height: 55px; color: #fff; }
+
+        /* GI-USAB NA NGA BUTTON TEXT */
+        #spin { background: #f9d71c; color: #000; padding: 12px 30px; border-radius: 50px; font-weight: 900; cursor: pointer; border: none; margin-top: 10px; font-size: 16px; box-shadow: 0 4px 0 #b8860b; }
+        #spin:active { transform: translateY(2px); box-shadow: 0 2px 0 #b8860b; }
+
+        .keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 15px; width: 90%; }
+        .key { background: #333; padding: 12px; border-radius: 8px; text-align: center; font-size: 22px; font-weight: 900; cursor: pointer; border-bottom: 3px solid #000; color: #fff; user-select: none; }
+        
+        #ov { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 100; text-align: center; }
+        #ov-icon { font-size: 100px; margin-bottom: 5px; }
+        #ov-msg { font-size: 24px; font-weight: 900; margin-bottom: 5px; }
+        #ov-answer { font-size: 90px; font-weight: 900; color: #f9d71c; margin-bottom: 20px; }
+        
+        .engagement-box { background: #f9d71c; color: #000; padding: 12px; border-radius: 12px; width: 80%; border: 3px solid #fff; animation: pulse 1s infinite alternate; }
+        .eng-follow { font-size: 16px; font-weight: 900; display: block; }
+        .eng-handle { font-size: 24px; font-weight: 900; background: #000; color: #fff; padding: 2px 8px; border-radius: 6px; display: inline-block; margin-top: 5px; }
+        
+        @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
+    </style>
+</head>
+<body>
+
+<div id="game">
+    <div id="ov">
+        <div id="ov-icon"></div>
+        <div id="ov-msg"></div>
+        <div id="ov-answer"></div>
+        <div class="engagement-box">
+            <span class="eng-follow">FOLLOW & SHARE</span>
+            <span class="eng-handle">@richeandrie</span>
+        </div>
+    </div>
+
+    <div id="t-bar"><div id="t-fill"></div></div>
+
+    <div class="w-area">
+        <div class="w-cont"><div class="ptr"></div><div id="w1" class="wheel"></div></div>
+        <div class="w-cont"><div class="ptr"></div><div id="w2" class="wheel"></div></div>
+    </div>
+
+    <button id="spin" onclick="go()">SPIN WHEEL!</button>
+
+    <div class="eq-area">
+        <div id="b1" class="box">?</div>
+        <div id="op" class="box" style="background:#ff4d4d; color:white; border-color:#fff">?</div>
+        <div id="b2" class="box">?</div>
+    </div>
+
+    <div id="ans"></div>
+
+    <div class="keys">
+        <div class="key" onclick="press('1')">1</div><div class="key" onclick="press('2')">2</div><div class="key" onclick="press('3')">3</div>
+        <div class="key" onclick="press('4')">4</div><div class="key" onclick="press('5')">5</div><div class="key" onclick="press('6')">6</div>
+        <div class="key" onclick="press('7')">7</div><div class="key" onclick="press('8')">8</div><div class="key" onclick="press('9')">9</div>
+        <div class="key" onclick="press('C')" style="background:#cc0000; font-size: 14px;">CLEAR</div>
+        <div class="key" onclick="press('0')">0</div>
+        <div class="key" onclick="press('DEL')" style="background:#555">⌫</div>
+    </div>
+</div>
+
+<script>
+    let n1, n2, oper, res, input = "", rot1 = 0, rot2 = 0, timer, time;
+    let isSpinning = false;
+    const wheels = [document.getElementById('w1'), document.getElementById('w2')];
+    const spinSnd = new Audio('https://assets.mixkit.co/active_storage/sfx/707/707-preview.mp3');
+    const winSnd = new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3');
+
+    wheels.forEach(w => {
+        for(let i=1; i<=10; i++) {
+            let d = document.createElement('div'); d.className = 'num';
+            d.innerText = i; d.style.transform = `rotate(${(i-1)*36}deg)`;
+            w.appendChild(d);
+        }
+    });
+
+    function speak(text) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.85;
+        window.speechSynthesis.speak(utterance);
+    }
+
+    function go() {
+        if(isSpinning) return;
+        isSpinning = true;
+        document.getElementById('spin').disabled = true;
+        clearInterval(timer);
+        document.getElementById('t-fill').style.width = "0%";
+        document.getElementById('ov').style.display = "none";
+        document.getElementById('b1').innerText = "?";
+        document.getElementById('b2').innerText = "?";
+        document.getElementById('op').innerText = "?";
+        input = ""; document.getElementById('ans').innerText = "";
+        
+        spinSnd.play().catch(e => {}); 
+
+        let t1 = Math.floor(Math.random()*10)+1;
+        let t2 = Math.floor(Math.random()*10)+1;
+        let oList = ['+','-','*'];
+        oper = oList[Math.floor(Math.random()*3)];
+
+        if(oper === '-') {
+            n1 = Math.max(t1, t2); n2 = Math.min(t1, t2);
+            res = n1 - n2;
+        } else {
+            n1 = t1; n2 = t2;
+            res = (oper === '+') ? n1 + n2 : n1 * n2;
+        }
+
+        rot1 += 1440 + (360 - ((n1-1)*36)) - (rot1%360);
+        rot2 += 1440 + (360 - ((n2-1)*36)) - (rot2%360);
+        wheels[0].style.transform = `rotate(${rot1}deg)`;
+        wheels[1].style.transform = `rotate(${rot2}deg)`;
+
+        setTimeout(() => {
+            document.getElementById('b1').innerText = n1;
+            document.getElementById('b2').innerText = n2;
+            document.getElementById('op').innerText = (oper === '*' ? '×' : oper);
+            isSpinning = false;
+            document.getElementById('spin').disabled = false;
+            startTime();
+        }, 3000);
+    }
+
+    function startTime() {
+        time = 100;
+        const fill = document.getElementById('t-fill');
+        fill.style.width = "100%";
+        fill.style.background = "#2ecc71";
+        timer = setInterval(() => {
+            time--;
+            fill.style.width = time + "%";
+            if(time <= 30) fill.style.background = "#ff4d4d";
+            if(time <= 0) { clearInterval(timer); showFeedback(false); }
+        }, 100);
+    }
+
+    function press(v) {
+        if(isSpinning || document.getElementById('b1').innerText === "?") return;
+        if(v==='C') input = "";
+        else if(v==='DEL') input = input.slice(0,-1);
+        else if(input.length < 3) input += v;
+        document.getElementById('ans').innerText = input;
+
+        if(input !== "" && parseInt(input) === res) {
+            clearInterval(timer);
+            showFeedback(true);
+        } else if(input.length >= res.toString().length) {
+            clearInterval(timer);
+            showFeedback(false);
+        }
+    }
+
+    function showFeedback(isCorrect) {
+        const ov = document.getElementById('ov');
+        const ovIcon = document.getElementById('ov-icon');
+        const ovMsg = document.getElementById('ov-msg');
+        const ovAns = document.getElementById('ov-answer');
+        
+        ovAns.innerText = res;
+        ov.style.display = "flex";
+        
+        let opWord = oper==='+'?"plus":oper==='-'?"minus":"times";
+
+        if(isCorrect) {
+            winSnd.play().catch(e => {});
+            confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
+            ovIcon.innerText = "✔";
+            ovIcon.style.color = "#2ecc71";
+            ovMsg.innerText = "EXCELLENT!";
+            ovMsg.style.color = "#2ecc71";
+            speak(`Correct! ${n1} ${opWord} ${n2} is ${res}`);
+        } else {
+            ovIcon.innerText = "✖";
+            ovIcon.style.color = "#ff4d4d";
+            ovMsg.innerText = "THE ANSWER IS:";
+            ovMsg.style.color = "#fff";
+            speak(`The answer is ${res}. ${n1} ${opWord} ${n2} is ${res}`);
+        }
+        
+        setTimeout(go, 5000);
+    }
+</script>
+</body>
+</html>
