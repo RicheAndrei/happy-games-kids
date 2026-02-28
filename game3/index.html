@@ -9,159 +9,56 @@
         body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: 'Arial Black', sans-serif; overflow: hidden; color: white; touch-action: none; }
         
         #game { 
-            width: 360px; 
-            height: 640px; 
-            background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e); 
-            border: 4px solid #f9d71c; 
-            position: relative; 
-            overflow: hidden; 
-            border-radius: 20px; 
+            width: 360px; height: 640px; background: #000; border: 4px solid #f9d71c; 
+            position: relative; overflow: hidden; border-radius: 20px; 
         }
 
-        /* PROMO TEXT SA TUNGA (BACKGROUND) */
-        #promo-bg {
-            position: absolute;
-            top: 45%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            text-align: center;
-            z-index: 1;
-            pointer-events: none;
-            opacity: 0.15; 
+        #webcam { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; transform: scaleX(-1); opacity: 0.6; }
+        #game-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.2); z-index: 2; pointer-events: none; }
+
+        /* START OVERLAY PARA MO-ACTIVE ANG SOUND */
+        #start-screen {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 500; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
         }
-        #promo-bg h2 { margin: 0; font-size: 30px; color: #f9d71c; letter-spacing: 2px; }
-        #promo-bg p { margin: 5px 0; font-size: 14px; letter-spacing: 1px; color: #fff; }
-        
-        #info-bar { 
-            position: absolute; 
-            top: 20px; 
-            width: 100%; 
-            padding: 10px 20px; 
-            display: flex; 
-            justify-content: space-between; 
-            background: rgba(249, 215, 28, 0.2); 
-            box-sizing: border-box; 
-            z-index: 50; 
-            border-bottom: 2px solid #f9d71c;
-        }
-        
-        #equation { 
-            text-align: center; 
-            font-size: 30px; 
-            margin-top: 100px; 
-            font-weight: bold; 
-            color: #f9d71c; 
-            text-shadow: 3px 3px #000; 
-            position: relative;
-            z-index: 10;
+        #start-btn {
+            background: #f9d71c; color: #000; border: none; padding: 20px 40px;
+            font-size: 24px; border-radius: 50px; cursor: pointer; font-family: 'Arial Black';
+            box-shadow: 0 0 20px #f9d71c; transition: 0.3s;
         }
 
-        /* BRAND TEXT SA UBOS */
-        #brand-text {
-            position: absolute;
-            bottom: 30px; 
-            width: 100%;
-            text-align: center;
-            z-index: 50;
-            pointer-events: none;
-        }
-        #brand-text .name { font-size: 20px; color: #f9d71c; text-shadow: 2px 2px #000; display: block; }
-        #brand-text .action { font-size: 11px; color: #fff; opacity: 0.8; letter-spacing: 1px; font-family: sans-serif; font-weight: bold; }
-        
-        #catcher { 
-            position: absolute; 
-            bottom: 110px; 
-            width: 110px; 
-            height: 55px; 
-            background: #f9d71c; 
-            border-radius: 0 0 35px 35px; 
-            left: 125px; 
-            border: 3px solid #fff; 
-            box-shadow: 0 5px 20px rgba(249,215,28,0.5); 
-            cursor: grab; 
-            z-index: 20; 
-        }
-        
-        .falling { 
-            position: absolute; 
-            min-width: 60px; 
-            height: 60px; 
-            background: #fff; 
-            color: #000; 
-            border-radius: 50%; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            font-weight: bold; 
-            font-size: 22px; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.5); 
-            border: 2px solid #333; 
-            z-index: 15;
-        }
-
-        #pop-text {
-            position: absolute;
-            width: 100%;
-            text-align: center;
-            top: 240px;
-            font-size: 50px;
-            color: #f9d71c;
-            display: none;
-            z-index: 100;
-            text-shadow: 4px 4px #000;
-        }
-        
-        #lvl-msg { 
-            position: absolute; 
-            top: 50%; 
-            left: 50%; 
-            transform: translate(-50%, -50%); 
-            font-size: 35px; 
-            color: #f9d71c; 
-            font-weight: bold; 
-            display: none; 
-            z-index: 200; 
-            text-align: center; 
-            background: rgba(0,0,0,0.95); 
-            width: 100%; 
-            padding: 30px; 
-            border-top: 5px solid #f9d71c; 
-            border-bottom: 5px solid #f9d71c; 
-        }
+        #info-bar { position: absolute; top: 20px; width: 100%; padding: 10px 20px; display: flex; justify-content: space-between; background: rgba(0, 0, 0, 0.5); box-sizing: border-box; z-index: 50; border-bottom: 2px solid #f9d71c; }
+        #equation { text-align: center; font-size: 32px; margin-top: 100px; font-weight: bold; color: #f9d71c; text-shadow: 3px 3px #000; position: relative; z-index: 10; }
+        #brand-text { position: absolute; bottom: 30px; width: 100%; text-align: center; z-index: 50; pointer-events: none; }
+        #brand-text .name { font-size: 22px; color: #f9d71c; text-shadow: 2px 2px #000; display: block; }
+        #catcher { position: absolute; bottom: 110px; width: 110px; height: 55px; background: #f9d71c; border-radius: 0 0 35px 35px; left: 125px; border: 3px solid #fff; box-shadow: 0 5px 20px rgba(0,0,0,0.5); cursor: grab; z-index: 20; }
+        .falling { position: absolute; min-width: 65px; height: 65px; background: #fff; color: #000; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 24px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); border: 2px solid #333; z-index: 15; }
+        #pop-text { position: absolute; width: 100%; text-align: center; top: 240px; font-size: 55px; color: #f9d71c; display: none; z-index: 100; text-shadow: 4px 4px #000; }
+        #lvl-msg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 35px; color: #f9d71c; font-weight: bold; display: none; z-index: 200; text-align: center; background: rgba(0,0,0,0.8); width: 100%; padding: 30px; border-top: 5px solid #f9d71c; border-bottom: 5px solid #f9d71c; }
     </style>
 </head>
 <body>
 
 <div id="game">
-    <div id="promo-bg">
-        <h2>RICHE ANDREI</h2>
-        <p>FOLLOW & SHARE</p>
+    <div id="start-screen">
+        <h2 style="color:#f9d71c">RICHE ANDREI</h2>
+        <p>Ready to Record?</p>
+        <button id="start-btn" onclick="startGame()">START GAME</button>
     </div>
 
-    <div id="info-bar">
-        <div id="score">SCORE: 0</div>
-        <div id="level">LVL: 1</div>
-    </div>
-    
+    <video id="webcam" autoplay playsinline></video>
+    <div id="game-overlay"></div>
+    <div id="info-bar"><div id="score">SCORE: 0</div><div id="level">LVL: 1</div></div>
     <div id="lvl-msg">LEVEL UP!</div>
     <div id="pop-text">WOW!</div>
     <div id="equation">READY...</div>
-    
     <div id="catcher"></div>
-
-    <div id="brand-text">
-        <span class="name">RICHE ANDREI</span>
-        <span class="action">FOLLOW & SHARE FOR MORE MATH GAMES</span>
-    </div>
+    <div id="brand-text"><span class="name">RICHE ANDREI</span><span class="action">FOLLOW FOR MORE GAMES</span></div>
 </div>
 
 <script>
-    let score = 0;
-    let level = 1;
-    let target = 0;
-    let gameActive = true;
-    
+    let score = 0; let level = 1; let target = 0; let gameActive = false;
     const correctSfx = new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3');
     const wrongSfx = new Audio('https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3');
     const congratsSfx = new Audio('https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3');
@@ -169,9 +66,22 @@
     const game = document.getElementById('game');
     const catcher = document.getElementById('catcher');
     const eqText = document.getElementById('equation');
-    const popText = document.getElementById('pop-text');
-    const msg = document.getElementById('lvl-msg');
-    const praiseWords = ["WOW!", "GALING!", "NICE!", "SHARP!", "SUPER!"];
+
+    // MOPADAGAN SA DULA HUMAN SA CLICK
+    function startGame() {
+        document.getElementById('start-screen').style.display = 'none';
+        gameActive = true;
+        initCamera();
+        newProblem();
+        setInterval(createFalling, 2500);
+    }
+
+    async function initCamera() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+            document.getElementById('webcam').srcObject = stream;
+        } catch (err) { console.error("Camera error: ", err); }
+    }
 
     function speakEquation(text) {
         window.speechSynthesis.cancel();
@@ -181,12 +91,12 @@
         window.speechSynthesis.speak(ut);
     }
 
+    // DRAG LOGIC
     let isDragging = false;
     function moveCatcher(clientX) {
         let rect = game.getBoundingClientRect();
         let x = clientX - rect.left - (catcher.offsetWidth / 2);
-        if (x < 0) x = 0;
-        if (x > rect.width - catcher.offsetWidth) x = rect.width - catcher.offsetWidth;
+        if (x < 0) x = 0; if (x > rect.width - catcher.offsetWidth) x = rect.width - catcher.offsetWidth;
         catcher.style.left = x + "px";
     }
     catcher.addEventListener('mousedown', () => isDragging = true);
@@ -196,13 +106,8 @@
     window.addEventListener('touchmove', (e) => { if (isDragging) moveCatcher(e.touches[0].clientX); });
     window.addEventListener('touchend', () => isDragging = false);
 
-    function showPopText(txt) {
-        popText.innerText = txt;
-        popText.style.display = "block";
-        setTimeout(() => { popText.style.display = "none"; }, 800);
-    }
-
     function newProblem() {
+        if(!gameActive) return;
         let n1, n2, n3, speechText;
         if (level === 1) { 
             n1 = Math.floor(Math.random() * 9); n2 = Math.floor(Math.random() * 9); 
@@ -221,21 +126,7 @@
             target = n1 + n2 + n3; eqText.innerText = n1 + " + " + n2 + " + " + n3 + " = ?";
             speechText = n1 + " plus " + n2 + " plus " + n3;
         }
-        setTimeout(() => speakEquation(speechText), 400);
-    }
-
-    function checkLevelUp() {
-        let oldLevel = level;
-        if (score >= 21) level = 4; else if (score >= 14) level = 3; else if (score >= 7) level = 2;
-        if (level > oldLevel) {
-            congratsSfx.play();
-            document.getElementById('level').innerText = "LVL: " + level;
-            msg.innerText = "LEVEL " + level + "!";
-            if(level === 4) msg.innerText = "FINAL ROUND:\nRICHE ANDREI MODE! 🔥";
-            msg.style.display = "block";
-            confetti({ particleCount: 200, spread: 90 });
-            setTimeout(() => { msg.style.display = "none"; }, 3000);
-        }
+        speakEquation(speechText);
     }
 
     function createFalling() {
@@ -250,23 +141,16 @@
 
         let fallTimer = setInterval(() => {
             let top = parseInt(div.style.top);
-            div.style.top = (top + 3) + "px"; 
-
+            div.style.top = (top + 4) + "px"; 
             if(top > 470 && top < 530) {
                 let divLeft = parseInt(div.style.left);
                 let cLeft = parseInt(catcher.style.left || 125);
                 if(divLeft > cLeft - 30 && divLeft < cLeft + 90) {
                     if(div.innerText == target) {
-                        score += 1;
-                        correctSfx.play();
-                        showPopText(praiseWords[Math.floor(Math.random()*praiseWords.length)]);
+                        score += 1; correctSfx.play();
                         confetti({ particleCount: 30, origin: { y: 0.82 } });
-                        checkLevelUp();
-                        newProblem();
-                    } else {
-                        score = Math.max(0, score - 1);
-                        wrongSfx.play();
-                    }
+                        checkLevelUp(); newProblem();
+                    } else { score = Math.max(0, score - 1); wrongSfx.play(); }
                     document.getElementById('score').innerText = "SCORE: " + score;
                     clearInterval(fallTimer); div.remove();
                 }
@@ -275,8 +159,18 @@
         }, 30);
     }
 
-    newProblem();
-    setInterval(createFalling, 2500);
+    function checkLevelUp() {
+        let oldLevel = level;
+        if (score >= 21) level = 4; else if (score >= 14) level = 3; else if (score >= 7) level = 2;
+        if (level > oldLevel) {
+            congratsSfx.play();
+            document.getElementById('level').innerText = "LVL: " + level;
+            const msg = document.getElementById('lvl-msg');
+            msg.innerText = "LEVEL " + level + "!";
+            msg.style.display = "block";
+            setTimeout(() => { msg.style.display = "none"; }, 3000);
+        }
+    }
 </script>
 </body>
 </html>
