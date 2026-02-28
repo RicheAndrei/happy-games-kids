@@ -1,11 +1,75 @@
-<div class="grid">
-    <a href="https://richeandrei.github.io/happy-games-kids/guess.html" class="game-btn red">
-        <span class="icon">🔍</span>
-        <span>Guess Icon</span>
-    </a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riche & Andrei Games</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;700&display=swap');
 
-    <a href="https://richeandrei.github.io/happy-games-kids/logic.html" class="game-btn blue">
-        <span class="icon">💡</span>
-        <span>Logic Trap</span>
-    </a>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f7f9fc;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        h1 { font-family: 'Fredoka One', cursive; color: #333; font-size: 2.2rem; }
+        .subtitle { color: #777; margin-bottom: 30px; }
+
+        .game-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 20px;
+            border-radius: 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: 0.3s;
+            box-shadow: 0 5px 0px rgba(0,0,0,0.1);
+        }
+
+        .btn:active { transform: translateY(4px); box-shadow: none; }
+
+        /* Saktong Links base sa imong folder structure */
+        .btn-red { background-color: #ff4757; }
+        .btn-blue { background-color: #3498db; }
+
+        .footer { margin-top: 30px; color: #bbb; font-style: italic; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🎮 Riche & Andrei Games 🎮</h1>
+    <p class="subtitle">Pili og dula sa ubos:</p>
+
+    <div class="game-grid">
+        <a href="game1/index.html" class="btn btn-red">Dula 1: Guess the Icon</a>
+        
+        <a href="game2/index.html" class="btn btn-blue">Dula 2: Logic Trap</a>
+    </div>
+
+    <p class="footer">Enjoy playing, kids!</p>
 </div>
+
+</body>
+</html>
