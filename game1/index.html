@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RICHE ANDREI | Happy Gaming Kids</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root { --gold: #f9d71c; --red: #b32a2a; }
+        body { margin: 0; background: #111; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: 'Arial Black', sans-serif; overflow: hidden; }
+        
+        #game-container { 
+            width: 360px; height: 640px; position: relative; 
+            background: linear-gradient(180deg, #1a1a1a 0%, #000 100%); 
+            border-radius: 20px; overflow: hidden; border: 3px solid #333; 
+        }
+
+        .ui { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; display: flex; flex-direction: column; align-items: center; }
+        
+        /* Header Section */
+        .header { width: 85%; background: rgba(0,0,0,0.85); border: 2.5px solid var(--gold); border-radius: 15px; margin-top: 25px; padding: 10px; display: flex; align-items: center; animation: float 3s ease-in-out infinite; }
+        .profile-pic { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--gold); background-image: url('mypic.jpg.jpg'); background-size: cover; background-position: center; background-color: #444; }
+        .profile-info { margin-left: 12px; color: white; line-height: 1.2; text-align: left; }
+        .profile-info h3 { margin: 0; font-size: 15px; color: var(--gold); text-transform: uppercase; }
+        
+        /* Game Instructions */
+        .instruction { width: 80%; background: var(--red); color: white; padding: 12px; border-radius: 8px; margin-top: 20px; text-align: center; border: 2px solid white; font-size: 18px; box-shadow: 0 5px 0 #000; text-transform: uppercase; animation: pulse 2s infinite; }
+
+        /* Playable Boxes */
+        .choices { display: flex; gap: 12px; margin-top: 40px; pointer-events: auto; cursor: pointer; }
+        .box { width: 85px; height: 85px; background: white; border-radius: 15px; border: 4px solid #333; display: flex; align-items: center; justify-content: center; font-size: 45px; transition: 0.3s; animation: float 4s ease-in-out infinite; }
+        .box:hover { transform: scale(1.1); border-color: var(--gold); }
+        
+        .success { background: #2ed573 !important; border-color: white !important; transform: scale(1.2) rotate(5deg); box-shadow: 0 0 30px #2ed573; }
+
+        /* Professional Message at Bottom */
+        .footer-engagement { position: absolute; bottom: 20px; width: 100%; text-align: center; pointer-events: none; }
+        .main-cta { color: var(--gold); font-size: 13px; font-weight: bold; text-shadow: 2px 2px #000; animation: pulse 1.5s infinite; padding: 0 10px; line-height: 1.3; }
+
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <div class="ui">
+        <div class="header">
+            <div class="profile-pic"></div>
+            <div class="profile-info">
+                <h3>RICHE ANDREI</h3>
+                <p style="margin:0; font-size:9px;">DIGITAL CREATOR | GAME DEVELOPER</p>
+            </div>
+        </div>
+        <div class="instruction" id="msg">GET READY!</div>
+        <div class="choices" id="choices-area">
+            <div id="c0" class="box" onclick="checkAnswer(0)"></div>
+            <div id="c1" class="box" onclick="checkAnswer(1)"></div>
+            <div id="c2" class="box" onclick="checkAnswer(2)"></div>
+        </div>
+        
+        <div class="footer-engagement">
+            <p class="main-cta">
+                HAPPY GAMING, KIDS! THANK YOU! <br>
+                PLEASE FOLLOW AND SHARE – RICHE ANDREI ❤️
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    const msg = document.getElementById('msg');
+    const boxes = [document.getElementById('c0'), document.getElementById('c1'), document.getElementById('c2')];
+    const clickSound = new Audio('https://www.soundjay.com/buttons/button-11.mp3');
+
+    const allItems = [
+        { name: "STAR", icon: "⭐" }, { name: "PINEAPPLE", icon: "🍍" }, { name: "SPONGE", icon: "🧽" },
+        { name: "APPLE", icon: "🍎" }, { name: "BURGER", icon: "🍔" }, { name: "PIZZA", icon: "🍕" },
+        { name: "CAR", icon: "🚗" }, { name: "BALL", icon: "⚽" }, { name: "CAKE", icon: "🎂" }
+    ];
+
+    let usedItems = [];
+    let targetBoxIdx = -1;
+    let isTransitioning = false;
+
+    function nextLevel() {
+        isTransitioning = false;
+        let available = allItems.filter(item => !usedItems.includes(item.name));
+        if (available.length < 3) { usedItems = []; available = [...allItems]; }
+
+        let currentSet = [];
+        for (let i = 0; i < 3; i++) {
+            const randomIndex = Math.floor(Math.random() * available.length);
+            currentSet.push(available.splice(randomIndex, 1)[0]);
+        }
+
+        targetBoxIdx = Math.floor(Math.random() * 3);
+        const currentTarget = currentSet[targetBoxIdx];
+        msg.innerText = "CLICK THE " + currentTarget.name + "!";
+        
+        boxes.forEach((b, i) => {
+            b.innerText = currentSet[i].icon;
+            b.className = "box";
+            b.style.background = "white";
+        });
+        currentSet.forEach(item => usedItems.push(item.name));
+    }
+
+    function checkAnswer(clickedIdx) {
+        if (isTransitioning) return;
+
+        if (clickedIdx === targetBoxIdx) {
+            isTransitioning = true;
+            clickSound.play();
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.3 } });
+            msg.innerText = "EXCELLENT! 🎉";
+            boxes[clickedIdx].classList.add('success');
+            setTimeout(nextLevel, 1500);
+        } else {
+            boxes[clickedIdx].style.borderColor = "red";
+            setTimeout(() => { boxes[clickedIdx].style.borderColor = "#333"; }, 300);
+        }
+    }
+
+    window.onload = nextLevel;
+</script>
+</body>
+</html>
