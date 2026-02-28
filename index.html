@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RICHE & ANDREI | Games</title>
+    <title>RICHE ANDREI | Games</title>
     <style>
         body { margin: 0; background: #2a2e31; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: 'Arial Black', sans-serif; color: white; overflow: hidden; }
         .container { background: #222529; border: 3px solid #f9d71c; border-radius: 35px; padding: 40px; width: 320px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
@@ -11,14 +11,16 @@
         .header h1 { font-size: 20px; color: #f9d71c; margin: 0; font-weight: 900; letter-spacing: 1px; }
         .btn { display: flex; align-items: center; justify-content: center; width: 100%; padding: 14px 0; margin-bottom: 15px; border-radius: 12px; border: none; color: white; font-weight: bold; font-size: 16px; cursor: pointer; text-decoration: none; gap: 10px; transition: 0.2s ease; }
         
-        /* THE COLORS FROM YOUR SCREENSHOT */
         .btn-find { background: linear-gradient(to right, #ff4d6d, #ff8533); }
         .btn-math { background: linear-gradient(to right, #f9d71c, #ff8533); color: #000; }
-        .btn-catcher { background: linear-gradient(to right, #ff8533, #ff4d6d); } /* Bag-ong color para sa Game 3 */
+        .btn-catcher { background: linear-gradient(to right, #ff8533, #ff4d6d); }
         .btn-spell { background: linear-gradient(to right, #f9d71c, #ff4d6d); }
 
         .btn:hover { transform: scale(1.03); }
-        .footer { color: #6c757d; font-size: 10px; margin-top: 25px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        /* FIXED FOOTER TEXT */
+        .footer { color: #6c757d; font-size: 11px; margin-top: 25px; text-transform: uppercase; letter-spacing: 1px; line-height: 1.5; }
+        .follow-text { color: #f9d71c; font-weight: bold; display: block; margin-top: 5px; font-size: 10px; }
     </style>
 </head>
 <body>
@@ -26,19 +28,18 @@
     <div class="container">
         <div class="header">
             <span>🎮</span>
-            <h1>RICHE & ANDREI</h1>
+            <h1>RICHE ANDREI</h1>
             <span>🎮</span>
         </div>
 
         <a href="game1/index.html" class="btn btn-find">🔍 Find the Object</a>
         <a href="game2/index.html" class="btn btn-math">🎡 Math Wheel Challenge</a>
-        
         <a href="game3/index.html" class="btn btn-catcher">🍎 Math Catcher</a>
-        
         <a href="game4/index.html" class="btn btn-spell">✍️ Spell the Object</a>
 
         <div class="footer">
             POWERED BY RICHE ANDREI GAMES
+            <span class="follow-text">FOLLOW FOR MORE GAMES</span>
         </div>
     </div>
 
