@@ -5,18 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riche & Andrei Games</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .container { background-color: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; width: 320px; }
-        h1 { color: #333; margin-bottom: 30px; font-size: 24px; }
-        .btn { display: block; width: 100%; padding: 15px 0; margin-bottom: 15px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; text-decoration: none; color: white; transition: transform 0.2s, opacity 0.2s; }
-        .btn:active { transform: scale(0.98); }
-        /* Game 1 Button */
-        .btn-red { background-color: #ff4757; }
-        /* Game 2 Button */
-        .btn-blue { background-color: #3498db; }
-        /* Game 3 Button - BAG-O! */
-        .btn-green { background-color: #2ed573; }
-        .footer { margin-top: 20px; color: #888; font-size: 14px; }
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f2f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 320px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 15px 0;
+            margin: 15px 0;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: transform 0.2s, opacity 0.2s;
+            cursor: pointer;
+        }
+        .button:active {
+            transform: scale(0.95);
+        }
+        /* Links to your folders */
+        .red { background-color: #ff4757; }
+        .blue { background-color: #3498db; }
+        .green { background-color: #2ed573; }
+        
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #888;
+        }
     </style>
 </head>
 <body>
@@ -24,12 +62,11 @@
 <div class="container">
     <h1>🎮 Riche & Andrei 🎮</h1>
     
-    <a href="game1/index.html" class="btn btn-red">🔍 Guess the Icon</a>
+    <a href="game4/index.html" class="button red">🔍 Guess the Icon</a>
     
-    <a href="game2/index.html" class="btn btn-blue">💡 Logic Trap</a>
-
-    <a href="game3/index.html" class="btn btn-green">🎯 Hidden Object</a>
-
+    <a href="#" onclick="alert('Coming Soon!')" class="button blue">💡 Logic Trap</a>
+    <a href="#" onclick="alert('Coming Soon!')" class="button green">🎯 Hidden Object</a>
+    
     <div class="footer">Enjoy playing!</div>
 </div>
 
