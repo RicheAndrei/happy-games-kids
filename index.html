@@ -1,16 +1,75 @@
-<div class="game-grid">
-        <a href="guess-the-icon.html" class="game-card card-red">
-            <span class="icon">🔍</span>
-            <span class="game-title">Guess the Icon</span>
-        </a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riche & Andrei Games</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
-        <a href="logic-trap.html" class="game-card card-blue">
-            <span class="icon">💡</span>
-            <span class="game-title">Logic Trap</span>
-        </a>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-        <a href="https://www.roblox.com/games/iyong-game-id" class="game-card card-purple">
-            <span class="icon">🧱</span>
-            <span class="game-title">Roblox Fun</span>
-        </a>
+        .container {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 { color: #2c3e50; margin-bottom: 20px; }
+
+        .game-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            display: block;
+            text-decoration: none;
+            padding: 20px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: white;
+            transition: transform 0.2s;
+        }
+
+        .btn:active { transform: scale(0.95); }
+
+        /* KINI ANG MGA COLOR SA BUTTON */
+        .btn-red { background-color: #ff4757; }
+        .btn-blue { background-color: #3498db; }
+
+        .footer { margin-top: 30px; color: #95a5a6; font-style: italic; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🎮 Riche & Andrei Games 🎮</h1>
+    <p>Pili og dula sa ubos:</p>
+
+    <div class="game-list">
+        <a href="IBUTANG_DI_ANG_FILENAME_SA_DULA_1.html" class="btn btn-red">Dula 1: Guess the Icon</a>
+        
+        <a href="IBUTANG_DI_ANG_FILENAME_SA_DULA_2.html" class="btn btn-blue">Dula 2: Logic Trap</a>
     </div>
+
+    <p class="footer">Enjoy playing, kids!</p>
+</div>
+
+</body>
+</html>
