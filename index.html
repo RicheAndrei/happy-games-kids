@@ -5,90 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RICHE & ANDREI | Games</title>
     <style>
-        /* GI-SUNOD NAKO ANG COLOR UG STYLE SA IMONG SCREENSHOT */
-        body { 
-            margin: 0; 
-            background: #2a2e31; /* Ang dark gray background sa imong Chrome */
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-            font-family: 'Arial', sans-serif; 
-        }
+        body { margin: 0; background: #2a2e31; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: 'Arial Black', sans-serif; color: white; overflow: hidden; }
+        .container { background: #222529; border: 3px solid #f9d71c; border-radius: 35px; padding: 40px; width: 320px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+        .header { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 30px; }
+        .header h1 { font-size: 20px; color: #f9d71c; margin: 0; font-weight: 900; letter-spacing: 1px; }
+        .btn { display: flex; align-items: center; justify-content: center; width: 100%; padding: 14px 0; margin-bottom: 15px; border-radius: 12px; border: none; color: white; font-weight: bold; font-size: 16px; cursor: pointer; text-decoration: none; gap: 10px; transition: 0.2s ease; }
         
-        .container { 
-            background: #222529; /* Ang inner dark box */
-            border: 3px solid #f9d71c; /* Ang yellow border sa imong menu */
-            border-radius: 35px; 
-            padding: 40px; 
-            width: 320px; 
-            text-align: center; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5); 
-        }
-
-        .header { 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 12px; 
-            margin-bottom: 30px; 
-        }
-
-        /* ANG IMONG NINDOT NGA HEADER */
-        .header h1 { 
-            font-size: 20px; 
-            color: #f9d71c; 
-            margin: 0; 
-            font-weight: 900;
-            letter-spacing: 1px; 
-        }
-
-        .btn { 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            width: 100%; 
-            padding: 14px 0; 
-            margin-bottom: 15px; 
-            border-radius: 12px; 
-            border: none; 
-            color: white; 
-            font-weight: bold; 
-            font-size: 16px; 
-            cursor: pointer; 
-            text-decoration: none; 
-            gap: 10px; 
-            transition: 0.2s ease;
-        }
-
-        /* 1. FIND THE OBJECT (RED-ORANGE) */
-        .btn-find { 
-            background: linear-gradient(to right, #ff4d6d, #ff8533); 
-            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
-        }
-
-        /* 2. MATH WHEEL (YELLOW-ORANGE) - BAG-O NI */
-        .btn-math { 
-            background: linear-gradient(to right, #f9d71c, #ff8533); 
-            color: #000; /* Dark text para mabasa sa yellow */
-            box-shadow: 0 4px 15px rgba(249, 215, 28, 0.3);
-        }
-
-        /* 3. SPELL THE OBJECT (YELLOW-RED) */
-        .btn-spell { 
-            background: linear-gradient(to right, #f9d71c, #ff4d6d); 
-            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
-        }
+        .btn-find { background: linear-gradient(to right, #ff4d6d, #ff8533); }
+        .btn-math { background: linear-gradient(to right, #f9d71c, #ff8533); color: #000; }
+        .btn-spell { background: linear-gradient(to right, #f9d71c, #ff4d6d); }
 
         .btn:hover { transform: scale(1.03); }
-
-        .footer { 
-            color: #6c757d; 
-            font-size: 10px; 
-            margin-top: 25px; 
-            text-transform: uppercase;
-            letter-spacing: 1px; 
-        }
+        .footer { color: #6c757d; font-size: 10px; margin-top: 25px; text-transform: uppercase; letter-spacing: 1px; }
     </style>
 </head>
 <body>
@@ -100,11 +28,9 @@
             <span>🎮</span>
         </div>
 
-        <a href="find-the-object/index.html" class="btn btn-find">🔍 Find the Object</a>
-
+        <a href="game1/index.html" class="btn btn-find">🔍 Find the Object</a>
         <a href="game2/index.html" class="btn btn-math">🎡 Math Wheel Challenge</a>
-
-        <a href="spell-the-object/index.html" class="btn btn-spell">✍️ Spell the Object</a>
+        <a href="game4/index.html" class="btn btn-spell">✍️ Spell the Object</a>
 
         <div class="footer">
             POWERED BY RICHE ANDREI GAMES
