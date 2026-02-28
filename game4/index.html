@@ -1,1 +1,53 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RICHE ANDREI | Roblox Quiz</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root { --gold: #f9d71c; --blue: #3498db; }
+        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: 'Arial Black', sans-serif; overflow: hidden; }
+        #game-container { width: 360px; height: 640px; position: relative; background: #1a1a1a; border-radius: 20px; border: 3px solid #333; overflow: hidden; }
+        .ui { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; display: flex; flex-direction: column; align-items: center; }
+        .header { width: 85%; background: rgba(0,0,0,0.85); border: 2.5px solid var(--gold); border-radius: 15px; margin-top: 25px; padding: 10px; display: flex; align-items: center; }
+        .profile-pic { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--gold); background-image: url('../mypic.jpg.jpg'); background-size: cover; }
+        .profile-info { margin-left: 12px; color: white; text-align: left; }
+        #object-display { width: 280px; height: 200px; background: #222; margin-top: 20px; border-radius: 15px; border: 4px solid white; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        #q-img { width: 100%; height: 100%; object-fit: cover; }
+        .question-box { width: 85%; background: white; color: #333; padding: 15px; border-radius: 12px; margin-top: 20px; text-align: center; font-size: 18px; border: 4px solid var(--blue); }
+        .options-container { margin-top: 30px; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .option { width: 80%; padding: 18px; background: rgba(255,255,255,0.1); border: 3px solid white; border-radius: 15px; color: white; font-size: 20px; cursor: pointer; text-align: center; font-weight: bold; }
+        .option:active { background: var(--gold); color: black; }
+    </style>
+</head>
+<body>
+<div id="game-container">
+    <div class="ui">
+        <div class="header">
+            <div class="profile-pic"></div>
+            <div class="profile-info"><h3 style="margin:0; font-size:14px; color:var(--gold);">RICHE ANDREI</h3><p style="margin:0; font-size:8px;">OBJECT MYSTERY QUIZ 🎮</p></div>
+        </div>
+        <div id="object-display"><img id="q-img" src="CorvetteC8.jpg"></div>
+        <div class="question-box" id="q">Anong kulay ng RED na Roblox Car?</div>
+        <div class="options-container">
+            <div class="option" onclick="check('A')">A. Pula</div>
+            <div class="option" onclick="check('B')">B. Asul</div>
+        </div>
+    </div>
+</div>
+<script>
+    function check(ans) {
+        if(ans === 'A') {
+            confetti({particleCount: 150, spread: 70, origin: {y: 0.7}});
+            document.getElementById('q').innerText = "CORRECT! 🎉";
+        } else {
+            document.getElementById('q').innerText = "TRAPPED! 😂";
+        }
+        setTimeout(() => {
+            document.getElementById('q').innerText = "Anong kulay ng RED na Roblox Car?";
+        }, 3000);
+    }
+</script>
+</body>
+</html>
