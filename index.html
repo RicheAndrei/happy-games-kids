@@ -6,22 +6,17 @@
     <title>RICHE ANDREI GAMES - MAIN MENU</title>
     <style>
         body { margin: 0; background: #000; color: #f9d71c; font-family: 'Arial Black', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
-        
-        .header { text-align: center; margin-bottom: 50px; }
-        .header h1 { font-size: 40px; text-shadow: 4px 4px #333; margin: 0; }
-        .header p { color: #fff; letter-spacing: 2px; font-size: 14px; }
-
-        .menu-container { display: flex; flex-direction: column; gap: 20px; width: 280px; }
-
+        .header { text-align: center; margin-bottom: 40px; }
+        .header h1 { font-size: 45px; text-shadow: 4px 4px #333; margin: 0; color: #f9d71c; }
+        .header p { color: #fff; letter-spacing: 2px; font-size: 14px; margin-top: 5px; }
+        .menu-container { display: flex; flex-direction: column; gap: 15px; width: 300px; }
         .game-btn { 
-            background: #f9d71c; color: #000; border: 4px solid #fff; padding: 15px; 
-            font-size: 18px; font-weight: bold; text-align: center; text-decoration: none; 
-            border-radius: 15px; transition: 0.3s; box-shadow: 0 5px 15px rgba(249, 215, 28, 0.4);
+            background: #f9d71c; color: #000; border: 4px solid #fff; padding: 18px; 
+            font-size: 20px; font-weight: bold; text-align: center; text-decoration: none; 
+            border-radius: 20px; transition: 0.3s; box-shadow: 0 0 20px rgba(249, 215, 28, 0.3);
         }
-        .game-btn:hover { transform: scale(1.05); background: #fff; border-color: #f9d71c; }
-
-        /* Branding sa ubos */
-        .footer { position: absolute; bottom: 20px; text-align: center; width: 100%; opacity: 0.6; font-size: 12px; color: #fff; }
+        .game-btn:hover { transform: scale(1.05); background: #fff; box-shadow: 0 0 30px rgba(249, 215, 28, 0.6); }
+        .footer { position: absolute; bottom: 25px; text-align: center; width: 100%; font-size: 12px; color: #fff; opacity: 0.8; line-height: 1.5; }
     </style>
 </head>
 <body>
@@ -32,14 +27,15 @@
     </div>
 
     <div class="menu-container">
-        <a href="game1/index.html" class="game-btn">🎮 MATH WHEEL</a>
-        <a href="game2/index.html" class="game-btn">🔢 NUMBER SPRINT</a>
+        <a href="game1/" class="game-btn">🎮 MATH WHEEL</a>
         
-        <a href="game3/index.html" class="game-btn">🍎 MATH CATCHER</a>
+        <a href="game2/" class="game-btn">🔢 NUMBER SPRINT</a>
+        
+        <a href="game3/" class="game-btn">🍎 MATH CATCHER</a>
     </div>
 
     <div class="footer">
-        DEVELOPED BY RICHE & ANDREI <br>
+        DEVELOPED BY RICHE ANDREI <br>
         FOLLOW & SHARE FOR MORE
     </div>
 
