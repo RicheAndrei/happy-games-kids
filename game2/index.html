@@ -29,7 +29,6 @@
         .key { background: #333; padding: 12px; border-radius: 8px; text-align: center; font-size: 22px; font-weight: 900; cursor: pointer; border-bottom: 3px solid #000; color: #fff; user-select: none; }
         .key:active { transform: scale(0.95); background: #444; }
         
-        /* OVERLAY FIX PARA SA TIKTOK */
         #ov { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; text-align: center; }
         #ov-icon { font-size: 80px; margin-bottom: 5px; }
         #ov-msg { font-size: 24px; font-weight: 900; margin-bottom: 5px; }
@@ -52,9 +51,7 @@
         <div id="ov-icon"></div>
         <div id="ov-msg"></div>
         <div id="ov-answer"></div>
-        
         <button id="btn-next" onclick="resetAndGo()">PLAY AGAIN</button>
-
         <div class="engagement-box">
             <span class="eng-follow">FOLLOW & SHARE</span>
             <span class="eng-handle">@richeandrie</span>
@@ -93,16 +90,24 @@
     let isSpinning = false;
     const wheels = [document.getElementById('w1'), document.getElementById('w2')];
     
+    // SOUNDS
     const spinSnd = new Audio('https://assets.mixkit.co/active_storage/sfx/707/707-preview.mp3');
     const winSnd = new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3');
     const wrongSnd = new Audio('https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3');
 
-    function unlockAudio() {
+    // TIKTOK AUDIO FIX: Pugson ang browser pag-resume sa audio context
+    function resumeAudio() {
+        const audioCtx = (window.AudioContext || window.webkitAudioContext);
+        if (audioCtx && audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        // Unlock sounds
         spinSnd.play().then(() => { spinSnd.pause(); spinSnd.currentTime = 0; }).catch(e=>{});
         winSnd.play().then(() => { winSnd.pause(); winSnd.currentTime = 0; }).catch(e=>{});
-        window.removeEventListener('touchstart', unlockAudio);
     }
-    window.addEventListener('touchstart', unlockAudio);
+
+    // Kada hikap sa screen, i-check ang audio
+    window.addEventListener('touchstart', resumeAudio, { once: true });
 
     wheels.forEach(w => {
         for(let i=1; i<=10; i++) {
@@ -121,12 +126,15 @@
     }
 
     function resetAndGo() {
+        resumeAudio(); // I-resume pag-usab inig click sa play again
         document.getElementById('ov').style.display = "none";
         go();
     }
 
     function go() {
         if(isSpinning) return;
+        resumeAudio(); // Sigurohon nga active ang audio inig spin
+        
         isSpinning = true;
         document.getElementById('spin').disabled = true;
         clearInterval(timer);
@@ -139,7 +147,7 @@
         input = ""; document.getElementById('ans').innerText = "";
         
         spinSnd.currentTime = 0;
-        spinSnd.play().catch(e => {});
+        spinSnd.play().catch(e => console.log("Audio blocked"));
 
         let t1 = Math.floor(Math.random()*10)+1;
         let t2 = Math.floor(Math.random()*10)+1;
