@@ -29,14 +29,18 @@
         .key { background: #333; padding: 12px; border-radius: 8px; text-align: center; font-size: 22px; font-weight: 900; cursor: pointer; border-bottom: 3px solid #000; color: #fff; user-select: none; }
         .key:active { transform: scale(0.95); background: #444; }
         
-        #ov { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; text-align: center; pointer-events: none; }
-        #ov-icon { font-size: 100px; margin-bottom: 5px; }
+        /* OVERLAY FIX PARA SA TIKTOK */
+        #ov { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; text-align: center; }
+        #ov-icon { font-size: 80px; margin-bottom: 5px; }
         #ov-msg { font-size: 24px; font-weight: 900; margin-bottom: 5px; }
-        #ov-answer { font-size: 90px; font-weight: 900; color: #f9d71c; margin-bottom: 20px; }
+        #ov-answer { font-size: 70px; font-weight: 900; color: #f9d71c; margin-bottom: 10px; }
         
+        #btn-next { background: #2ecc71; color: white; padding: 15px 40px; border-radius: 50px; font-size: 22px; font-weight: 900; border: none; cursor: pointer; box-shadow: 0 5px 0 #27ae60; margin-bottom: 20px; }
+        #btn-next:active { transform: translateY(3px); box-shadow: none; }
+
         .engagement-box { background: #f9d71c; color: #000; padding: 12px; border-radius: 12px; width: 80%; border: 3px solid #fff; animation: pulse 1s infinite alternate; }
-        .eng-follow { font-size: 16px; font-weight: 900; display: block; }
-        .eng-handle { font-size: 24px; font-weight: 900; background: #000; color: #fff; padding: 2px 8px; border-radius: 6px; display: inline-block; margin-top: 5px; }
+        .eng-follow { font-size: 14px; font-weight: 900; display: block; }
+        .eng-handle { font-size: 20px; font-weight: 900; background: #000; color: #fff; padding: 2px 8px; border-radius: 6px; display: inline-block; margin-top: 5px; }
         
         @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
     </style>
@@ -48,6 +52,9 @@
         <div id="ov-icon"></div>
         <div id="ov-msg"></div>
         <div id="ov-answer"></div>
+        
+        <button id="btn-next" onclick="resetAndGo()">PLAY AGAIN</button>
+
         <div class="engagement-box">
             <span class="eng-follow">FOLLOW & SHARE</span>
             <span class="eng-handle">@richeandrie</span>
@@ -86,15 +93,13 @@
     let isSpinning = false;
     const wheels = [document.getElementById('w1'), document.getElementById('w2')];
     
-    // SOUNDS
     const spinSnd = new Audio('https://assets.mixkit.co/active_storage/sfx/707/707-preview.mp3');
     const winSnd = new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3');
     const wrongSnd = new Audio('https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3');
 
-    // MOBILE SOUND UNLOCK
     function unlockAudio() {
-        spinSnd.play().then(() => { spinSnd.pause(); spinSnd.currentTime = 0; });
-        winSnd.play().then(() => { winSnd.pause(); winSnd.currentTime = 0; });
+        spinSnd.play().then(() => { spinSnd.pause(); spinSnd.currentTime = 0; }).catch(e=>{});
+        winSnd.play().then(() => { winSnd.pause(); winSnd.currentTime = 0; }).catch(e=>{});
         window.removeEventListener('touchstart', unlockAudio);
     }
     window.addEventListener('touchstart', unlockAudio);
@@ -115,6 +120,11 @@
         window.speechSynthesis.speak(utterance);
     }
 
+    function resetAndGo() {
+        document.getElementById('ov').style.display = "none";
+        go();
+    }
+
     function go() {
         if(isSpinning) return;
         isSpinning = true;
@@ -129,7 +139,7 @@
         input = ""; document.getElementById('ans').innerText = "";
         
         spinSnd.currentTime = 0;
-        spinSnd.play().catch(e => console.log("Sound blocked"));
+        spinSnd.play().catch(e => {});
 
         let t1 = Math.floor(Math.random()*10)+1;
         let t2 = Math.floor(Math.random()*10)+1;
@@ -217,12 +227,6 @@
             ovMsg.style.color = "#fff";
             speak(`The answer is ${res}`);
         }
-        
-        // AUTO RESET FOR MOBILE
-        setTimeout(() => {
-            ov.style.display = "none";
-            go(); 
-        }, 4000);
     }
 </script>
 </body>
